@@ -9,7 +9,6 @@ import Comment from '@/components/Comment';
 import Link from '@/components/Link';
 
 import { notificationData, routeData, commentData, linkData, teamData } from '@/dummyData';
-import { link } from 'fs';
 import Team from '@/components/Team';
 
 export default function Home() {
