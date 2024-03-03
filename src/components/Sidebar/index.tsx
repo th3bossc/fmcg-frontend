@@ -7,6 +7,7 @@ import { faProductHunt } from "@fortawesome/free-brands-svg-icons";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { signOut } from "next-auth/react";
 const Sidebar = () => {
 
     const sidebarData = useMemo(() => [
@@ -42,7 +43,7 @@ const Sidebar = () => {
     const pathname = usePathname();
     return (
         <motion.div
-            className="bg-neutral-800 left-0 top-0 h-screen flex justify-center items-center"
+            className="bg-neutral-800 left-0 top-0 h-screen flex justify-center items-center relative"
             onMouseOver={() => setOpen(true)}
             onMouseOut={() => setOpen(false)}
             initial="open"
@@ -52,7 +53,7 @@ const Sidebar = () => {
                     width: "250px"
                 },
                 close: {
-                    width: "75px"
+                    width: "100px"
                 }
             }}
         >
@@ -93,6 +94,12 @@ const Sidebar = () => {
                     ))
                 }
             </div>
+            <div className="absolute left-0 bottom-0 w-full">
+                <button className="text-semibold text-sm m-2 p-1 rounded-md bg-red-900 hover:bg-red-400 hover:text-black" onClick={() => signOut()}>
+                    Sign out
+                </button>
+            </div>
+
         </motion.div>
     );
 }

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Sidebar from "@/components/Sidebar";
-import MuiContainer from "@/components/MuiContainer";
+import MuiContainer from "@/components/Container";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,9 +18,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`flex gap-2 ${inter.className}`}>
+      <body className={inter.className}>
         <MuiContainer>
-          <Sidebar />
           {children}
         </MuiContainer>
       </body>

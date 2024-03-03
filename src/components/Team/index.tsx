@@ -15,7 +15,7 @@ const Team = ({
     const [hover, setHover] = useState(false);
     return (
         <div
-            className="bg-neutral-900 p-2 rounded-sm w-full flex flex-col items-center justify-center gap-2 text-center relative pointer"
+            className="bg-neutral-700 p-2 rounded-sm w-full flex flex-col items-center justify-center gap-2 text-center relative pointer"
             onMouseOver={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
         >
