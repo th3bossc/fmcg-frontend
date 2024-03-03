@@ -1,12 +1,15 @@
+import { ReceiptInterface } from "@/types";
+import { Dispatch, SetStateAction } from "react";
+
 const Notification = ({
     title,
-    day
+    day,
 }: {
-    title: string;
-    day: string;
+    title: string,
+    day: string,
 }) => {
     return (
-        <div className="w-full flex items-center justify-between">
+        <div className="cursor-pointer w-full flex items-center justify-between">
             <div className="flex gap-2 items-center justify-center">
                 <span
                     className="border border-red-400 rounded-xl m-2 p-2 bg-red-300"

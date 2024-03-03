@@ -10,10 +10,13 @@ import Link from '@/components/Link';
 import { useSession, signIn } from 'next-auth/react';
 import { notificationData, routeData, commentData, linkData, teamData } from '@/dummyData';
 import Team from '@/components/Team';
+import Reciept from '@/components/Reciept';
+import { useState } from 'react';
+import { ReceiptInterface } from '@/types';
 
 export default function Home() {
   const { data, status } = useSession();
-  console.log(data)
+  const [reciept, setReciept] = useState<ReceiptInterface | null>(null);
   if (status === "loading")
     return (
       <main className="grid grid-cols-3 grid-rows-6 p-4 w-full h-screen gap-2">
@@ -26,6 +29,9 @@ export default function Home() {
     signIn()
   return (
     <main className="grid grid-cols-3 grid-rows-6 p-4 w-full h-screen gap-2">
+      {
+        reciept && <Reciept {...reciept} close={() => setReciept(null)} />
+      }
       <div className="rounded-sm row-start-1 row-span-1 col-start-1 col-span-3 w-full flex items-center justify-between p-4">
         <div className="flex flex-col gap-2 w-full">
           <span className="text-4xl font-bold">Welcome, {data?.user?.name}!</span>
@@ -43,7 +49,7 @@ export default function Home() {
         <div className='divide-y flex flex-col gap-2 mt-2 h-full overflow-y-scroll overflow-x-hidden'>
           {
             notificationData.map((notification, index) => (
-              <Notification key={index} {...notification} />
+              <Notification key={index} {...notification} setReceipt={setReciept} />
             ))
           }
         </div>
