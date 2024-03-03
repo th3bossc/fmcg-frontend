@@ -19,7 +19,7 @@ const Stockout = () => {
 
     const steps = [
         "Select Route & Product",
-        "Complete the form",
+        "Choose the orders to accept/reject",
     ]
 
 

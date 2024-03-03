@@ -8,8 +8,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 const Sidebar = () => {
-
+    const router = useRouter();
     const sidebarData = useMemo(() => [
         {
             name: "Dashboard",
@@ -17,8 +18,8 @@ const Sidebar = () => {
             icon: faUser
         },
         {
-            name: "Product Tracker",
-            href: "/product-tracker",
+            name: "Inventory Tracker",
+            href: "/inventory",
             icon: faProductHunt
         },
         {
@@ -64,6 +65,9 @@ const Sidebar = () => {
                             key={index}
                             href={item.href}
                             className="relative w-full"
+                            style={{
+                                width: open ? "250px" : "100px"
+                            }}
                         >
                             <div className="flex gap-4 w-full items-center justify-start p-2 h-8 overflow-hidden text-neutral-400 hover:text-red-400">
                                 <FontAwesomeIcon icon={item.icon} />
@@ -95,7 +99,7 @@ const Sidebar = () => {
                 }
             </div>
             <div className="absolute left-0 bottom-0 w-full">
-                <button className="text-semibold text-sm m-2 p-1 rounded-md bg-red-900 hover:bg-red-400 hover:text-black" onClick={() => signOut()}>
+                <button className="text-semibold text-sm m-2 p-1 rounded-md bg-red-900 hover:bg-red-400 hover:text-black" onClick={() => signOut() || router.push("/login")}>
                     Sign out
                 </button>
             </div>
