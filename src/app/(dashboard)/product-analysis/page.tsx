@@ -1,7 +1,7 @@
 "use client"
 
 import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import { routeData, productData } from "@/dummyData";
+import { routeData, productData, recieptData } from "@/dummyData";
 import { useState } from "react";
 const AnalysisPage = () => {
     const [analytics, setAnalytics] = useState<{
@@ -73,10 +73,23 @@ const AnalysisPage = () => {
             <Button size="small" variant="outlined" className="mt-4 font-semibold" onClick={getAnalytics}> View Data </Button>
             {
                 analytics && (
-                    <div className="mt-32 border border-1 border-neutral-600 w-96 h-32 flex flex-col gap-4 text-xs items-center justify-center">
-                        <h1><strong>Consumption:</strong> {analytics.consumption}</h1>
-                        <h1><strong>Demand:</strong> {analytics.demand}</h1>
-                        ...other details
+                    <div className="w-full mt-4 h-full">
+                        <h1 className="font-semibold mb-4 text-center"> Order receipts </h1>
+                        <div className="h-full w-full flex gap-2 flex-col">
+                            {
+                                recieptData.map((item, index) => (
+                                    <div key={index} className="flex justify-between items-center w-full p-4 border border-1 border-neutral-600 gap-2">
+                                        <span className="font-regular w-48"> <strong>Product:</strong> {item.product.name} </span>
+                                        <span className="font-regular w-48"> <strong>Retailer:</strong> {item.retailerName} </span>
+                                        <span className="font-regular w-48"> <strong>Brand:</strong> {item.product.brand}</span>
+                                        <span className="font-regular w-48"> <strong>Demand:</strong> {Math.floor(100 * Math.random())} </span>
+                                        <div>
+                                            <p className={`text-white rounded-lg w-32 p-2 text-center capitalize ${item.status === "accept" ? "bg-green-900" : "bg-red-900"}`}> {item.status}ed </p>
+                                        </div>
+                                    </div>
+                                ))
+                            }
+                        </div>
                     </div>
                 )
             }
