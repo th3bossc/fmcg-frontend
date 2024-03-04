@@ -49,7 +49,7 @@ export default function Home() {
         <div className='divide-y flex flex-col gap-2 mt-2 h-full overflow-y-scroll overflow-x-hidden'>
           {
             notificationData.map((notification, index) => (
-              <Notification key={index} {...notification} setReceipt={setReciept} />
+              <Notification key={index} {...notification} />
             ))
           }
         </div>
