@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { faUser, faUsers, faCalendar, faMagnifyingGlass, faM } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faUsers, faTowerBroadcast, faMagnifyingGlass, faM } from "@fortawesome/free-solid-svg-icons";
 import { faProductHunt } from "@fortawesome/free-brands-svg-icons";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -28,9 +28,9 @@ const Sidebar = () => {
             icon: faUsers
         },
         {
-            name: "Delivery Dates",
-            href: "/delivery-dates",
-            icon: faCalendar
+            name: "Live Demand",
+            href: "/stockout",
+            icon: faTowerBroadcast
         },
         {
             name: "Product Analysis",
@@ -44,7 +44,7 @@ const Sidebar = () => {
     const pathname = usePathname();
     return (
         <motion.div
-            className="bg-neutral-800 left-0 top-0 h-screen flex justify-center items-center relative"
+            className="bg-neutral-800 left-0 top-0 h-screen flex flex-col justify-center items-center relative"
             onMouseOver={() => setOpen(true)}
             onMouseOut={() => setOpen(false)}
             initial="open"
@@ -98,8 +98,8 @@ const Sidebar = () => {
                     ))
                 }
             </div>
-            <div className="absolute left-0 bottom-0 w-full">
-                <button className="text-semibold text-sm m-2 p-1 rounded-md bg-red-900 hover:bg-red-400 hover:text-black" onClick={() => signOut() || router.push("/login")}>
+            <div className="absolute bottom-0">
+                <button className="text-semibold text-sm p-1 m-1 my-2 rounded-md bg-red-900 hover:bg-red-400 hover:text-black" onClick={() => signOut() || router.push("/login")}>
                     Sign out
                 </button>
             </div>

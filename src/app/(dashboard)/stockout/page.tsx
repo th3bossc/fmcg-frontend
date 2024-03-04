@@ -60,7 +60,7 @@ const Stockout = () => {
             <AnimatePresence>
                 {activeStep === 0 && (
                     <motion.div
-                        className="h-full flex flex-col items-center justify-center w-full"
+                        className="h-full flex gap-4 flex-col items-center justify-center w-full"
                     >
                         <h1 className="font-bold"> Choose the route and the product </h1>
                         <FormControl className="w-96 mt-4 text-white">
