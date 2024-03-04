@@ -3,6 +3,9 @@
 import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { routeData, productData, recieptData } from "@/dummyData";
 import { useState } from "react";
+import Image from "next/image";
+import graph from "/public/graph.jpg";
+
 const AnalysisPage = () => {
     const [analytics, setAnalytics] = useState<{
         consumption: number,
@@ -77,20 +80,25 @@ const AnalysisPage = () => {
                 analytics && (
                     <div className="w-full mt-4 h-full">
                         <h1 className="font-semibold mb-4 text-center"> Order receipts </h1>
-                        <div className="h-full w-full flex gap-2 flex-col">
-                            {
-                                recieptData.map((item, index) => (
-                                    <div key={index} className="flex justify-between items-center w-full p-4 border border-1 border-neutral-600 gap-2">
-                                        <span className="font-regular w-48"> <strong>Product:</strong> {item.product.name} </span>
-                                        <span className="font-regular w-48"> <strong>Retailer:</strong> {item.retailerName} </span>
-                                        <span className="font-regular w-48"> <strong>Brand:</strong> {item.product.brand}</span>
-                                        <span className="font-regular w-48"> <strong>Demand:</strong> {Math.floor(100 * Math.random())} </span>
-                                        <div>
-                                            <p className={`text-white rounded-lg w-32 p-2 text-center capitalize ${item.status === "accept" ? "bg-green-900" : "bg-red-900"}`}> {item.status}ed </p>
+                        <div className="grid grid-cols-12 gap-2  ">
+                            <div className="col-span-4 h-full items-center justify-center flex gap-2 flex-col">
+                                <Image src={graph} alt="something" />
+                            </div>
+                            <div className="col-span-8 h-full w-full flex gap-2 flex-col">
+                                {
+                                    recieptData.map((item, index) => (
+                                        <div key={index} className="flex justify-between items-center w-full p-4 border border-1 border-neutral-600 gap-2">
+                                            <span className="font-regular w-48"> <strong>Product:</strong> {item.product.name} </span>
+                                            <span className="font-regular w-48"> <strong>Retailer:</strong> {item.retailerName} </span>
+                                            <span className="font-regular w-48"> <strong>Brand:</strong> {item.product.brand}</span>
+                                            <span className="font-regular w-48"> <strong>Demand:</strong> {Math.floor(100 * Math.random())} </span>
+                                            <div>
+                                                <p className={`text-white rounded-lg w-32 p-2 text-center capitalize ${item.status === "accept" ? "bg-green-900" : "bg-red-900"}`}> {item.status}ed </p>
+                                            </div>
                                         </div>
-                                    </div>
-                                ))
-                            }
+                                    ))
+                                }
+                            </div>
                         </div>
                     </div>
                 )
