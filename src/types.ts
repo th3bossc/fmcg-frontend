@@ -40,7 +40,7 @@ export type Product = {
     name: string,
     category: string,
     brand: string,
-    demand: "Low demand" | "Medium demand" | "High demand" | "Very high demand",
+    demand: number,
     priority: number,
 }
 

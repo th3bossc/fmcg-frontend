@@ -97,28 +97,28 @@ export const productData: Product[] = [
         name: "Product 1",
         category: "Category 1",
         brand: "Brand 1",
-        demand: "Low demand",
+        demand: 123,
         priority: 1
     },
     {
         name: "Product 2",
         category: "Category 2",
         brand: "Brand 2",
-        demand: "Medium demand",
+        demand: 1234,
         priority: 2
     },
     {
         name: "Product 3",
         category: "Category 3",
         brand: "Brand 3",
-        demand: "High demand",
+        demand: 12345,
         priority: 3
     },
     {
         name: "Product 4",
         category: "Category 4",
         brand: "Brand 4",
-        demand: "Very high demand",
+        demand: 132456,
         priority: 4
     }
 ]
@@ -205,5 +205,208 @@ export const orderData = [
         required: 800,
         location: routeData[3].destination,
     }
+]
 
+
+export const retailerData = [
+    {
+        name: "Lulu Hypermarket",
+        logo: "/user.jpg",
+        contact: "1234567890",
+        address: "Address 1",
+        website: "https://www.luluhypermarket.com/"
+    },
+    {
+        name: "Reliance Digital",
+        logo: "/user.jpg",
+        contact: "1234567890",
+        address: "Address 2",
+        website: "https://www.reliancedigital.com/"
+    },
+    {
+        name: "Big Bazaar",
+        logo: "/user.jpg",
+        contact: "1234567890",
+        address: "Address 3",
+        website: "https://www.bigbazaar.com/"
+    },
+    {
+        name: "D-Mart",
+        logo: "/user.jpg",
+        contact: "1234567890",
+        address: "Address 4",
+        website: "https://www.dmart.com/"
+    },
+    {
+        name: "Walmart",
+        logo: "/user.jpg",
+        contact: "1234567890",
+        address: "Address 5",
+        website: "https://www.walmart.com/"
+    },
+    {
+        name: "Target",
+        logo: "/user.jpg",
+        contact: "1234567890",
+        address: "Address 6",
+        website: "https://www.target.com/"
+    },
+    {
+        name: "Costco",
+        logo: "/user.jpg",
+        contact: "1234567890",
+        address: "Address 7",
+        website: "https://www.costco.com/"
+    },
+    {
+        name: "Amazon",
+        logo: "/user.jpg",
+        contact: "1234567890",
+        address: "Address 8",
+        website: "https://www.amazon.com/"
+    },
+    {
+        name: "Flipkart",
+        logo: "/user.jpg",
+        contact: "1234567890",
+        address: "Address 9",
+        website: "https://www.flipkart.com/"
+    },
+    {
+        name: "Snapdeal",
+        logo: "/user.jpg",
+        contact: "1234567890",
+        address: "Address 10",
+        website: "https://www.snapdeal.com/"
+    }
+]
+
+export const distributorData = [
+    {
+        name: "Distributor 1",
+        logo: "/user.jpg",
+        contact: "1234567890",
+        address: "Address 1",
+        website: "https://www.distributor1.com/",
+    },
+    {
+        name: "Distributor 2",
+        logo: "/user.jpg",
+        contact: "1234567890",
+        address: "Address 2",
+        website: "https://www.distributor2.com/",
+    },
+    {
+        name: "Distributor 3",
+        logo: "/user.jpg",
+        contact: "1234567890",
+        address: "Address 3",
+        website: "https://www.distributor3.com/",
+    },
+    {
+        name: "Distributor 4",
+        logo: "/user.jpg",
+        contact: "1234567890",
+        address: "Address 4",
+        website: "https://www.distributor4.com/",
+    },
+    {
+        name: "Distributor 5",
+        logo: "/user.jpg",
+        contact: "1234567890",
+        address: "Address 5",
+        website: "https://www.distributor5.com/",
+    },
+    {
+        name: "Distributor 6",
+        logo: "/user.jpg",
+        contact: "1234567890",
+        address: "Address 6",
+        website: "https://www.distributor6.com/",
+    },
+    {
+        name: "Distributor 7",
+        logo: "/user.jpg",
+        contact: "1234567890",
+        address: "Address 7",
+        website: "https://www.distributor7.com/",
+    },
+    {
+        name: "Distributor 8",
+        logo: "/user.jpg",
+        contact: "1234567890",
+        address: "Address 8",
+        website: "https://www.distributor8.com/",
+    },
+    {
+        name: "Distributor 9",
+        logo: "/user.jpg",
+        contact: "1234567890",
+        address: "Address 9",
+        website: "https://www.distributor9.com/",
+    },
+    {
+        name: "Distributor 10",
+        logo: "/user.jpg",
+        contact: "1234567890",
+        address: "Address 10",
+        website: "https://www.distributor10.com/",
+    },
+]
+
+
+
+export const orderHistory = [
+    {
+        product: productData[0],
+        required: 100,
+        location: routeData[0].destination,
+        accepted: false,
+    },
+    {
+        product: productData[1],
+        required: 200,
+        location: routeData[1].destination,
+        accepted: true,
+        acceptedBy: "Distributor 1"
+    },
+    {
+        product: productData[2],
+        required: 300,
+        location: routeData[2].destination,
+        accepted: false,
+    },
+    {
+        product: productData[3],
+        required: 400,
+        location: routeData[3].destination,
+        accepted: true,
+        acceptedBy: "Distributor 2"
+    },
+    {
+        product: productData[0],
+        required: 500,
+        location: routeData[0].destination,
+        accepted: true,
+        acceptedBy: "Distributor 3"
+    },
+    {
+        product: productData[1],
+        required: 600,
+        location: routeData[1].destination,
+        accepted: false,
+    },
+    {
+        product: productData[2],
+        required: 700,
+        location: routeData[2].destination,
+        accepted: true,
+        acceptedBy: "Distributor 4"
+    },
+    {
+        product: productData[3],
+        required: 800,
+        location: routeData[3].destination,
+        accepted: false,
+    }
 ]

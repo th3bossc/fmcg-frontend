@@ -36,5 +36,18 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 0;
+  width: 0.2rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 0.2rem;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
 }

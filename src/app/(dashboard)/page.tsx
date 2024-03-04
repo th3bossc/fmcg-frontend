@@ -10,7 +10,7 @@ import Link from '@/components/Link';
 import { useSession } from 'next-auth/react';
 import { notificationData, routeData, commentData, linkData, teamData } from '@/dummyData';
 import Team from '@/components/Team';
-
+import dayjs from 'dayjs';
 export default function Home() {
   const { data } = useSession();
 
@@ -25,7 +25,7 @@ export default function Home() {
       </div>
       <div className="rounded-sm row-start-2 row-span-2 col-start-1 col-span-1 bg-neutral-900 hover:bg-neutral-800 flex items-center justify-center">
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DatePicker />
+          <DatePicker defaultValue={dayjs(new Date())} />
         </LocalizationProvider>
       </div>
       <div className="rounded-sm row-start-2 row-span-2 col-start-2 col-span-2 bg-neutral-900 hover:bg-neutral-800 p-4 flex flex-col">

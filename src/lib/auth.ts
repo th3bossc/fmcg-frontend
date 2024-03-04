@@ -39,29 +39,33 @@ export const authOptions: NextAuthOptions = {
                     return null;
                 }
 
-                const user = {
-                    id: "1",
-                    name: "John Doe",
-                    email: "john@example.com",
-                    username: "johnDoe",
-                    role: "distributor" as Role, // or "retailer"
-                    randomKey: 12,
+                if (credentials.email === "Razik") {
+                    const user = {
+                        id: "1",
+                        name: "Razik",
+                        email: "john@example.com",
+                        username: "johnDoe",
+                        role: "distributor" as Role, // or "retailer"
+                        randomKey: 12,
+                    }
+                    return user;
                 }
-                return user;
+                else if (credentials.email === "Lulu") {
+                    const user = {
+                        id: "2",
+                        name: "Lulu Hypermarket",
+                        email: "lulu@abc.com",
+                        username: "Lulu",
+                        role: "retailer" as Role,
+                        randomKey: 13,
+                    }
+                    return user;
+                }
+                return null;
             }
         })
     ],
     callbacks: {
-        session: ({ session, token }) => {
-            return {
-                ...session,
-                user: {
-                    ...session.user,
-                    id: token.id,
-                    randomKey: token.randomKey,
-                }
-            }
-        },
         jwt: ({ token, user }) => {
             if (user) {
                 const u = user as unknown as any;
@@ -69,9 +73,21 @@ export const authOptions: NextAuthOptions = {
                     ...token,
                     id: u.id,
                     randomKey: u.randomKey,
+                    role: u.role,
                 }
             }
             return token;
-        }
+        },
+        session: ({ session, token }) => {
+            return {
+                ...session,
+                user: {
+                    ...session.user,
+                    id: "asdf",
+                    randomKey: token.randomKey,
+                    role: token.role,
+                }
+            }
+        },
     }
 }

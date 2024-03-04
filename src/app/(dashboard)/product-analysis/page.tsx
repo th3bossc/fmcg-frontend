@@ -70,7 +70,9 @@ const AnalysisPage = () => {
                     </Select>
                 </FormControl>
             </div>
-            <Button size="small" variant="outlined" className="mt-4 font-semibold" onClick={getAnalytics}> View Data </Button>
+            <div className="mt-4">
+                <Button size="small" variant="outlined" className="font-semibold" onClick={getAnalytics}> View Data </Button>
+            </div>
             {
                 analytics && (
                     <div className="w-full mt-4 h-full">
