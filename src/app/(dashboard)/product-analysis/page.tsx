@@ -5,6 +5,8 @@ import { routeData, productData, recieptData } from "@/dummyData";
 import { useState } from "react";
 import Image from "next/image";
 import graph from "/public/graph.jpg";
+import graph2 from '/public/graph2.png';
+import graph3 from '/public/graph3.png';
 
 const AnalysisPage = () => {
     const [analytics, setAnalytics] = useState<{
@@ -39,8 +41,9 @@ const AnalysisPage = () => {
     }
 
     return (
-        <div className="p-8 w-full relative flex flex-col items-center h-screen overflow-scroll">
-            <h1>Product Analysis</h1>
+        <div className="p-8 w-full relative flex flex-col gap-4 items-center h-screen overflow-scroll">
+            <h1 className="text-3xl font-bold w-full">Product Analysis</h1>
+            <hr className="w-full" />
             <div className="flex gap-2 mt-4 items-center justify-center">
                 <FormControl className="w-96 mt-4 text-white">
                     <InputLabel id="route-select-label">Route</InputLabel>
@@ -77,7 +80,7 @@ const AnalysisPage = () => {
                 <Button size="small" variant="outlined" className="font-semibold" onClick={getAnalytics}> View Data </Button>
             </div>
             {
-                analytics && (
+                analytics ? (
                     <div className="w-full mt-4 h-full">
                         <h1 className="font-semibold mb-4 text-center"> Order receipts </h1>
 
@@ -95,12 +98,17 @@ const AnalysisPage = () => {
                                     </div>
                                 ))
                             }
-                            <div className="h-full items-center justify-center flex gap-2 flex-col">
-                                <Image src={graph} alt="something" className="w-full h-full" />
+                            <div className="h-full flex gap-2 w-full">
+                                <Image src={graph2} alt="something" className="rounded-lg object-fit-cover" />
+                                <Image src={graph} alt="something" className="rounded-lg object-fit-cover" />
+                                <Image src={graph3} alt="something" className="rounded-lg object-fit-cover" />
                             </div>
                         </div>
                     </div>
-
+                ) : (
+                    <span className="w-full h-full flex justify-center items-center text-neutral-600 text-xl">
+                        Choose a product and a route to view the analytics
+                    </span>
                 )
             }
         </div>

@@ -3,14 +3,14 @@ import { Button } from "@mui/material";
 
 const InventoryTracker = () => {
     return (
-        <div className="w-full h-screen flex flex-col justify-center items-center p-8">
+        <div className="w-full h-screen flex flex-col gap-4 justify-center items-center p-8">
             <div className="flex justify-between items-center w-full">
-                <h1 className="font-bold">Inventory Tracker</h1>
+                <h1 className="font-bold text-3xl">Inventory Tracker</h1>
                 <Button variant="outlined"> Add Product </Button>
             </div>
-            <hr className="w-full my-4" />
+            <hr className="w-full" />
             <div className="w-full mt-4 h-full">
-                <h1 className="font-semibold mb-4 text-center"> Order receipts </h1>
+                <h1 className="font-semibold mb-4 text-xl text-center"> Order receipts </h1>
                 <div className="h-full w-full flex gap-2 flex-col">
                     {
                         recieptData.map((item, index) => (

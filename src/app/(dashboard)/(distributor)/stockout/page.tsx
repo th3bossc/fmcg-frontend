@@ -47,7 +47,9 @@ const Stockout = () => {
 
 
     return (
-        <div className="p-8 w-full relative flex flex-col items-center">
+        <div className="p-8 w-full relative flex flex-col items-center gap-4">
+            <h1 className="font-bold text-3xl w-full">Live Demand</h1>
+            <hr className="w-full" />
             <Stepper activeStep={activeStep} alternativeLabel className="w-full">
                 {
                     steps.map((label, index) => (

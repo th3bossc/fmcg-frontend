@@ -12,8 +12,9 @@ const Profile = () => {
     const user: User = data?.user as User;
     const router = useRouter();
     return (
-        <div className="p-8 w-full relative flex flex-col items-center">
+        <div className="p-8 w-full relative flex flex-col gap-4 items-center">
             <h1 className="text-3xl font-bold w-full">Profile</h1>
+            <hr className="w-full" />
             <div className="h-full w-full flex items-center justify-center">
                 <div className="w-full h-full lg:w-[900px] lg:h-[500px] bg-[#d2d2d2] rounded-lg text-black p-10 pt-32 xl:p-10 relative overflow-hidden z-10">
                     <div className="absolute top-0 left-0 w-full h-full -z-10" >

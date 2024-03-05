@@ -51,3 +51,8 @@ body {
 ::-webkit-scrollbar-corner {
   background: transparent;
 }
+
+*::selection {
+  background-color: rgba(var(--foreground-rgb), 0.99);
+  color: rgba(var(--background-start-rgb), 0.99);
+}
