@@ -4,10 +4,11 @@ export type User = {
     email: string,
     username: string,
     role: Role,
-    randomKey: number,
+    contact?: string,
+    address?: string,
 }
 
-export type Role = "retailer" | "distributor";
+export type Role = "RETAILER" | "DISTRIBUTOR";
 
 export interface UserDetails extends Omit<User, "randomKey" | "id"> {
     password: string,

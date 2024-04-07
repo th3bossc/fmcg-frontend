@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { useAuthContext } from "@/AuthContext";
 import { useRouter } from "next/navigation";
 
 
@@ -9,11 +9,10 @@ const Layout = ({
 }: {
     children: React.ReactNode
 }) => {
-    const { data } = useSession();
-    const userRole = (data?.user as any)?.role;
+    const { user } = useAuthContext();
     const router = useRouter();
-    if (userRole !== "retailer")
-        router.push("/");
+    if (user?.role !== "RETAILER")
+        return router.push("/dasboard");
     return (
         <>
             {children}

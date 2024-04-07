@@ -1,15 +1,15 @@
 "use client";
 
 import { ChangeEvent, MouseEvent, useState } from "react";
-import { signIn } from "next-auth/react";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { UserDetails } from "@/types";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
-
+    const router = useRouter();
     const [formData, setFormData] = useState<UserDetails>({
         name: "",
-        role: "retailer",
+        role: "RETAILER",
         username: "",
         email: "",
         password: "",
@@ -26,7 +26,7 @@ const Login = () => {
         })
     }
 
-    const handleSelect = (e: MouseEvent<HTMLElement>, value: "retailer" | "distributor") => {
+    const handleSelect = (e: MouseEvent<HTMLElement>, value: "RETAILER" | "DISTRIBUTOR") => {
         setFormData((prev) => {
             return {
                 ...prev,
@@ -37,7 +37,6 @@ const Login = () => {
 
     const handleSubmit = () => {
         console.log(formData);
-        signIn();
     }
 
     return (
@@ -55,8 +54,8 @@ const Login = () => {
                     className="w-96 h-10 rounded-md p-2 mt-4 flex items-center justify-center"
                     size="small"
                 >
-                    <ToggleButton value="retailer" className="border-0 bg-transparent"> Retailer </ToggleButton>
-                    <ToggleButton value="distributor"> Distributor </ToggleButton>
+                    <ToggleButton value="RETAILER" className="border-0 bg-transparent"> Retailer </ToggleButton>
+                    <ToggleButton value="DISTRIBUTOR"> Distributor </ToggleButton>
                 </ToggleButtonGroup>
                 <input
                     type="text"
@@ -102,7 +101,7 @@ const Login = () => {
                 />
                 <button type="button" className="w-96 h-10 p-1 mt-4 bg-red-900 hover:bg-red-300 hover:text-black" onClick={handleSubmit}> Login </button>
             </form>
-            <div className="w-full text-center text-xs mt-4"> Already have an account? <button onClick={() => signIn()} className="pointer text-red-200"> Log In </button></div>
+            <div className="w-full text-center text-xs mt-4"> Already have an account? <button onClick={() => router.push("/login")} className="pointer text-red-200"> Log In </button></div>
         </div>
     )
 }

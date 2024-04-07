@@ -7,18 +7,18 @@ import Notification from '@/components/Notification';
 import Route from '@/components/Route';
 import Comment from '@/components/Comment';
 import Link from '@/components/Link';
-import { useSession } from 'next-auth/react';
 import { notificationData, routeData, commentData, linkData, teamData } from '@/dummyData';
 import Team from '@/components/Team';
 import dayjs from 'dayjs';
-export default function Home() {
-  const { data } = useSession();
+import { useAuthContext } from '@/AuthContext';
 
+export default function Home() {
+  const { user } = useAuthContext();
   return (
     <main className="grid grid-cols-3 grid-rows-6 p-4 w-full h-screen gap-2">
       <div className="rounded-sm row-start-1 row-span-1 col-start-1 col-span-3 w-full flex items-center justify-between p-4">
         <div className="flex flex-col gap-2 w-full">
-          <span className="text-4xl font-bold">Welcome, {data?.user?.name}!</span>
+          <span className="text-4xl font-bold">Welcome, {user?.name}!</span>
           <span> Here is your inventory overview </span>
         </div>
         <input type="text" placeholder="Search products" className="w-full bg-transparent border border-neutral-200 px-4 py-2 rounded-lg" />

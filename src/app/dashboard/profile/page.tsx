@@ -1,15 +1,14 @@
 "use client";
 
 import { User } from "@/types";
-import { signOut, useSession } from "next-auth/react";
 import profileImage from '/public/user.jpg';
 import profileBg from '/public/blob-scene-haikei.svg';
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useAuthContext } from "@/AuthContext";
 
 const Profile = () => {
-    const { data } = useSession();
-    const user: User = data?.user as User;
+    const { user, logOut } = useAuthContext();
     const router = useRouter();
     return (
         <div className="p-8 w-full relative flex flex-col gap-4 items-center">
@@ -74,14 +73,13 @@ const Profile = () => {
                                 contact: &nbsp;
                             </span>
                             <span className={`font-bold text-nitconfprimary`}>
-                                {/* {user?.role || 'N/A'} */}
-                                N/A
+                                {user?.contact || 'N/A'}
                             </span>
                         </div>
 
                     </div>
                     <div className={`text-lg lg:text-2xl mt-16 lg:m-0 flex lg:block gap-2 lg:absolute bottom-8 right-8 p-1 rounded-md hover:bg-indigo-500 hover:text-white bg-neutral-300 items-center justify-center`}>
-                        <button onClick={() => signOut() || router.push("/login")}>
+                        <button onClick={() => logOut()}>
                             <span className="font-medium text-center text-lg lg:text-2xl">
                                 Logout
                             </span>

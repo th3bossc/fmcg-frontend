@@ -48,7 +48,7 @@ export const commentData: Comment[] = [
     {
         header: "Current Routes",
         text: "Stockouts",
-        link: "/stockout"
+        link: "/dashboard/stockout"
     },
     {
         header: "Special Requests",

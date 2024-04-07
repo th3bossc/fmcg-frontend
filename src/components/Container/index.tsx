@@ -1,9 +1,9 @@
 "use client";
 
+import { AuthContextProvider } from "@/AuthContext";
 import { ThemeProvider } from "@emotion/react";
 import { CssBaseline, createTheme } from "@mui/material";
 import { ReactNode } from "react";
-import { SessionProvider } from "next-auth/react";
 const darkTheme = createTheme({
     palette: {
         mode: 'dark'
@@ -16,9 +16,9 @@ const Container = ({ children }: {
     return (
         <ThemeProvider theme={darkTheme}>
             <CssBaseline />
-            <SessionProvider>
+            <AuthContextProvider>
                 {children}
-            </SessionProvider>
+            </AuthContextProvider>
         </ThemeProvider >
     );
 }

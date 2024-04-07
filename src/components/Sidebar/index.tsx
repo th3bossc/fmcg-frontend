@@ -7,37 +7,36 @@ import { faProductHunt } from "@fortawesome/free-brands-svg-icons";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useSession } from "next-auth/react";
-import { Role } from "@/types";
+import { useAuthContext } from "@/AuthContext";
 const Sidebar = () => {
-    const { data } = useSession();
-    const userRole: Role = (data?.user as any)?.role;
+    const { user } = useAuthContext();
+    const userRole = user?.role;
     const sidebarData = useMemo(() => {
-        if (userRole === "distributor") {
+        if (userRole === "DISTRIBUTOR") {
             return [
                 {
                     name: "Dashboard",
-                    href: "/",
+                    href: "/dashboard",
                     icon: faUser
                 },
                 {
                     name: "Inventory Tracker",
-                    href: "/inventory",
+                    href: "/dashboard/inventory",
                     icon: faProductHunt
                 },
                 {
                     name: "Retailers",
-                    href: "/viewall",
+                    href: "/dashboard/viewall",
                     icon: faUsers
                 },
                 {
                     name: "Live Demand",
-                    href: "/stockout",
+                    href: "/dashboard/stockout",
                     icon: faTowerBroadcast
                 },
                 {
                     name: "Product Analysis",
-                    href: "/product-analysis",
+                    href: "/dashboard/product-analysis",
                     icon: faMagnifyingGlass
                 },
             ]
@@ -46,22 +45,22 @@ const Sidebar = () => {
             return [
                 {
                     name: "Dashboard",
-                    href: "/",
+                    href: "/dasboard",
                     icon: faUser
                 },
                 {
                     name: "Pending Orders",
-                    href: "/orders",
+                    href: "/dashboard/orders",
                     icon: faProductHunt
                 },
                 {
                     name: "Distributors",
-                    href: "/viewall",
+                    href: "/dashboard/viewall",
                     icon: faUsers
                 },
                 {
                     name: "Product Analysis",
-                    href: "/product-analysis",
+                    href: "/dashboard/product-analysis",
                     icon: faMagnifyingGlass
                 },
             ]

@@ -1,11 +1,14 @@
 "use client";
 
 import { ChangeEvent, useState } from "react";
-import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { loginUser } from "@/lib/auth";
+import { useRouter } from "next/navigation";
+import { useAuthContext } from "@/AuthContext";
 
 const Login = () => {
-
+    const { logIn } = useAuthContext();
+    const router = useRouter();
     const [formData, setFormData] = useState({
         email: "",
         password: ""
@@ -21,14 +24,17 @@ const Login = () => {
         })
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         console.log(formData);
-        signIn("credentials", {
-            email: formData.email,
-            password: formData.password,
-            callbackUrl: "/",
-
-        })
+        try {
+            const { access } = await loginUser(formData.email, formData.password);
+            console.log(access);
+            logIn(access);
+            router.push("/dashboard");
+        }
+        catch (err) {
+            console.error(err);
+        }
     }
 
     return (
