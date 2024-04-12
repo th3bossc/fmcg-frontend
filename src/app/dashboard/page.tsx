@@ -7,13 +7,13 @@ import Notification from '@/components/Notification';
 import Route from '@/components/Route';
 import Comment from '@/components/Comment';
 import Link from '@/components/Link';
-import { notificationData, routeData, commentData, linkData, teamData } from '@/dummyData';
+import { commentData, linkData, teamData } from '@/dummyData';
 import Team from '@/components/Team';
 import dayjs from 'dayjs';
 import { useAuthContext } from '@/AuthContext';
 
 export default function Home() {
-  const { user } = useAuthContext();
+  const { user, routes, notifications } = useAuthContext();
   return (
     <main className="grid grid-cols-3 grid-rows-6 p-4 w-full h-screen gap-2">
       <div className="rounded-sm row-start-1 row-span-1 col-start-1 col-span-3 w-full flex items-center justify-between p-4">
@@ -32,7 +32,7 @@ export default function Home() {
         <h2 className='font-semibold text-lg'>Notifications</h2>
         <div className='divide-y flex flex-col gap-2 mt-2 h-full overflow-y-scroll overflow-x-hidden'>
           {
-            notificationData.map((notification, index) => (
+            notifications.map((notification, index) => (
               <Notification key={index} {...notification} />
             ))
           }
@@ -45,7 +45,7 @@ export default function Home() {
         </div>
         <div className='flex flex-col gap-2 mt-2 h-full overflow-y-scroll overflow-x-hidden'>
           {
-            routeData.map((route, index) => (
+            routes.map((route, index) => (
               <Route key={index} {...route} />
             ))
           }

@@ -28,7 +28,6 @@ const Login = () => {
         console.log(formData);
         try {
             const { access } = await loginUser(formData.email, formData.password);
-            console.log(access);
             logIn(access);
             router.push("/dashboard");
         }

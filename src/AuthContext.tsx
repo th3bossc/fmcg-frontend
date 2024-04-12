@@ -1,7 +1,8 @@
 import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from 'react';
-import { User } from './types';
+import { Route, User, Notification } from './types';
 import { usePathname, useRouter } from 'next/navigation';
 import { getProfile } from './lib/auth';
+import { getNotifications, getRoutes } from './lib/general';
 
 
 export const AuthContext = createContext<{
@@ -10,7 +11,9 @@ export const AuthContext = createContext<{
     jwt: string | null,
     loading: boolean,
     logIn: (jwt: string) => void,
-    logOut: () => void
+    logOut: () => void,
+    routes: Route[],
+    notifications: Notification[]
 } | null>(null);
 
 export const AuthContextProvider = ({
@@ -21,6 +24,9 @@ export const AuthContextProvider = ({
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState<User | null>(null);
     const [jwt, setJwt] = useState<string | null>(null);
+    const [routes, setRoutes] = useState<Route[]>([]);
+    const [notifications, setNotifications] = useState<Notification[]>([]);
+
     const [loading, setLoading] = useState(false);
     const router = useRouter();
     const pathname = usePathname();
@@ -31,9 +37,13 @@ export const AuthContextProvider = ({
         setLoading(true);
         try {
             const currentUser = await getProfile(token);
+            const routeData = await getRoutes();
+            const notificationData = await getNotifications(token);
             localStorage.setItem("jwt", token);
             setJwt(token);
             setUser(currentUser);
+            setRoutes(routeData || []);
+            setNotifications(notificationData || []);
 
             if (currentPath === "") {
                 setLoading(false);
@@ -42,6 +52,7 @@ export const AuthContextProvider = ({
             router.push("/dashboard")
         }
         catch (err) {
+            console.log(err);
             localStorage.removeItem('jwt');
             setJwt(null);
             setUser(null);
@@ -78,7 +89,9 @@ export const AuthContextProvider = ({
             jwt,
             loading,
             logIn,
-            logOut
+            logOut,
+            routes,
+            notifications
         }}>
             {children}
         </AuthContext.Provider>

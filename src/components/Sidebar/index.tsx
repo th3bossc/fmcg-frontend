@@ -45,7 +45,7 @@ const Sidebar = () => {
             return [
                 {
                     name: "Dashboard",
-                    href: "/dasboard",
+                    href: "/dashboard",
                     icon: faUser
                 },
                 {
@@ -105,7 +105,7 @@ const Sidebar = () => {
                 }
             </div>
             <div className="absolute bottom-4">
-                <Link className="text-semibold text-sm p-1 m-1 text-neutral-400 hover:text-blue-400 border border-1 border-neutral-500 hover:border-blue-500 rounded-sm" href="/profile">
+                <Link className="text-semibold text-sm p-1 m-1 text-neutral-400 hover:text-blue-400 border border-1 border-neutral-500 hover:border-blue-500 rounded-sm" href="/dashboard/profile">
                     View Profile
                 </Link>
             </div>

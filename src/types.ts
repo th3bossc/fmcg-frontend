@@ -2,10 +2,11 @@ export type User = {
     id: string,
     name: string,
     email: string,
-    username: string,
     role: Role,
     contact?: string,
     address?: string,
+    website?: string,
+    logo?: string,
 }
 
 export type Role = "RETAILER" | "DISTRIBUTOR";
@@ -16,15 +17,18 @@ export interface UserDetails extends Omit<User, "randomKey" | "id"> {
 }
 
 export type Notification = {
+    id: string,
     title: string,
     day: string,
 }
 
 export type Route = {
+    id: string,
     routeName: string,
     text: string,
     source: string,
-    destination: string
+    destination: string,
+    location: string,
 }
 
 export type Comment = {
@@ -38,6 +42,7 @@ export type Link = {
 }
 
 export type Product = {
+    id: string,
     name: string,
     category: string,
     brand: string,
@@ -51,14 +56,31 @@ export type StockOutData = {
     retailerName: string,
     product: Product | null,
     status: "accept" | "reject",
-    description: string,
 
 }
 
-export type ReceiptInterface = {
-    route: Route | null,
-    product: Product | null,
-    retailerName: string,
-    status: "accept" | "reject",
-    description: string,
+export type Order = {
+    id: string,
+    status: "PENDING" | "ACCEPTED" | "REJECTED",
+    retailer: User,
+    product: Product,
+    required: number,
+    location: string,
+    accepted_by?: User,
+}
+
+export type Receipt = {
+    // 'id', 'product', 'retailer', 'accepted'
+    id: string,
+    product: Product,
+    retailer: User,
+    accepted: boolean,
+}
+
+export type Demand = {
+    id: string,
+    product: Product,
+    retailer: User,
+    required: number,
+    location: string,
 }

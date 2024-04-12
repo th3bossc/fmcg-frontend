@@ -1,19 +1,24 @@
 "use client";
 
-import { useState } from "react";
-import { StockOutData } from "@/types";
+import { useEffect, useState } from "react";
+import { Order, Product, StockOutData, Route } from "@/types";
 import { Button, ButtonGroup, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Step, StepLabel, Stepper } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
-import { productData, routeData, orderData } from "@/dummyData";
 import Card from "@/components/Card";
+import { getProducts, getRoutes } from "@/lib/general";
+import { useAuthContext } from "@/AuthContext";
+import { acceptOrder, getDemands, rejectOrder } from "@/lib/distributor";
 
 const Stockout = () => {
+    const { jwt, routes } = useAuthContext();
+    const [productData, setProductData] = useState<Product[]>([]);
+    const [routeData, setRouteData] = useState<Route[]>(routes);
+    const [orderData, setOrderData] = useState<Order[]>([]);
     const [formData, setFormData] = useState<StockOutData>({
         route: routeData[0],
         retailerName: "",
         product: productData[0],
         status: "accept",
-        description: "",
     });
     const [activeStep, setActiveStep] = useState(0);
 
@@ -38,12 +43,35 @@ const Stockout = () => {
     }
 
     const acceptHandler = (index: number) => {
-
+        acceptOrder(jwt, orderData[index].id);
     }
 
     const rejectHandler = (index: number) => {
-        orderData.splice(index, 1);
+        rejectOrder(jwt, orderData[index].id);
     }
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const products = await getProducts();
+            setProductData(products);
+        }
+
+        fetchData();
+    }, [formData.product?.id, formData.route?.location, jwt]);
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const orders = await getDemands()
+            console.log(orders);
+            setOrderData(
+                orders?.filter(order => order.product.id === formData.product?.id && order.location === formData.route?.location) || []
+            )
+        }
+        activeStep === 1 && fetchData();
+
+    }, [activeStep, formData.product?.id, formData.route?.location, jwt])
 
 
     return (
@@ -75,7 +103,7 @@ const Stockout = () => {
                             >
                                 {
                                     routeData.map((route, index) => (
-                                        <MenuItem key={index} value={index}>{route.routeName}</MenuItem>
+                                        <MenuItem key={index} value={index}>{route.location}</MenuItem>
                                     ))
                                 }
                             </Select>
@@ -106,7 +134,7 @@ const Stockout = () => {
                                 <Card
                                     key={index}
                                     product={order.product}
-                                    retailer={order.retailerName}
+                                    retailer={order.retailer.name}
                                     required={order.required}
                                     location={order.location}
                                     reject={() => rejectHandler(index)}

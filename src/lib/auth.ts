@@ -1,3 +1,4 @@
+import { Role } from '@/types';
 import axios from 'axios'
 
 
@@ -5,17 +6,16 @@ export const loginUser = async (email: string, password: string) => {
     const response = await axios.post<{
         access: string,
         refresh: string,
-    }>('http://localhost:8000/api/token/', {
+    }>(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/token/`, {
         email,
         password
     });
-    console.log(response.data);
     return response.data;
 }
 
 export const getProfile = async (token: string) => {
     try {
-        const response = await axios.get('http://localhost:8000/api/user/profile/', {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/profile/`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -23,5 +23,35 @@ export const getProfile = async (token: string) => {
         return response.data;
     } catch (error) {
         console.error(error);
+    }
+}
+
+export const registerUser = async (
+    email: string,
+    password: string,
+    name: string,
+    contact: string,
+    address: string,
+    role: Role
+) => {
+    if (role === "RETAILER") {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/retailers/`, {
+            email,
+            password,
+            name,
+            contact,
+            address,
+        });
+        return response.data;
+    }
+    else {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/distributors/`, {
+            email,
+            password,
+            name,
+            contact,
+            address,
+        });
+        return response.data;
     }
 }

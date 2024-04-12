@@ -1,8 +1,22 @@
 "use client";
+import { useAuthContext } from "@/AuthContext";
 import OrderCard from "@/components/OrderCard";
-import { orderHistory } from "@/dummyData";
+import { getOrders } from "@/lib/retailer";
+import { Order } from "@/types";
+import { useEffect, useState } from "react";
 
 const Orders = () => {
+    const [orderHistory, setOrderHisory] = useState<Order[]>([]);
+    const { jwt } = useAuthContext();
+    useEffect(() => {
+        const getData = async () => {
+            const data = await getOrders(jwt);
+            setOrderHisory(data || []);
+        }
+        getData();
+    }, [jwt])
+
+
     return (
         <div className="flex flex-col gap-4 w-full p-8 h-screen overflow-scroll ">
             <h1 className="font-bold text-3xl"> Previous Orders </h1>

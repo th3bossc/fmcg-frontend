@@ -10,7 +10,6 @@ const Login = () => {
     const [formData, setFormData] = useState<UserDetails>({
         name: "",
         role: "RETAILER",
-        username: "",
         email: "",
         password: "",
         confirmPassword: ""
@@ -57,48 +56,53 @@ const Login = () => {
                     <ToggleButton value="RETAILER" className="border-0 bg-transparent"> Retailer </ToggleButton>
                     <ToggleButton value="DISTRIBUTOR"> Distributor </ToggleButton>
                 </ToggleButtonGroup>
-                <input
-                    type="text"
-                    placeholder="Full name"
-                    className="placeholder-neutral-600 text-sm w-96 h-10 border-2 border-gray-800 rounded-md p-2 bg-neutral-900 mt-4"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                />
-                <input
-                    type="email"
-                    placeholder="Email"
-                    className="placeholder-neutral-600 text-sm w-96 h-10 border-2 border-gray-800 rounded-md p-2 bg-neutral-900 mt-4"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                />
+                <div className="w-96 flex gap-3">
+                    <input
+                        type="text"
+                        placeholder="Full name"
+                        className="placeholder-neutral-600 text-sm w-full h-10 border-2 border-gray-800 rounded-md p-2 bg-neutral-900 mt-4"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                    />
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        className="placeholder-neutral-600 text-sm w-full h-10 border-2 border-gray-800 rounded-md p-2 bg-neutral-900 mt-4"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="w-96 flex gap-3">
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        className="placeholder-neutral-600 text-sm w-full h-10 border-2 border-gray-800 rounded-md p-2 mt-4 bg-neutral-900"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                    />
+
+                    <input
+                        type="password"
+                        placeholder="Confirm Password"
+                        className="placeholder-neutral-600 text-sm w-full h-10 border-2 border-gray-800 rounded-md p-2 mt-4 bg-neutral-900"
+                        name="confirmPassword"
+                        value={formData.confirmPassword}
+                        onChange={handleChange}
+                    />
+                </div>
 
                 <input
                     type="text"
-                    placeholder="Username"
+                    placeholder="address"
                     className="placeholder-neutral-600 text-sm w-96 h-10 border-2 border-gray-800 rounded-md p-2 mt-4 bg-neutral-900"
-                    name="username"
-                    value={formData.username}
-                    onChange={handleChange}
-                />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    className="placeholder-neutral-600 text-sm w-96 h-10 border-2 border-gray-800 rounded-md p-2 mt-4 bg-neutral-900"
-                    name="password"
-                    value={formData.password}
+                    name="address"
+                    value={formData.address}
                     onChange={handleChange}
                 />
 
-                <input
-                    type="password"
-                    placeholder="Confirm Password"
-                    className="placeholder-neutral-600 text-sm w-96 h-10 border-2 border-gray-800 rounded-md p-2 mt-4 bg-neutral-900"
-                    name="confirmPassword"
-                    value={formData.confirmPassword}
-                    onChange={handleChange}
-                />
                 <button type="button" className="w-96 h-10 p-1 mt-4 bg-red-900 hover:bg-red-300 hover:text-black" onClick={handleSubmit}> Login </button>
             </form>
             <div className="w-full text-center text-xs mt-4"> Already have an account? <button onClick={() => router.push("/login")} className="pointer text-red-200"> Log In </button></div>

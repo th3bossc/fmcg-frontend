@@ -1,5 +1,3 @@
-import { ReceiptInterface } from "@/types";
-import { Dispatch, SetStateAction } from "react";
 
 const Notification = ({
     title,
@@ -20,7 +18,7 @@ const Notification = ({
                 <span
                     className="border border-neutral-400 rounded-xl m-1 p-1 bg-neutral-300"
                 />
-                {day}
+                {day.split("T")[0]}
             </div>
         </div>
     );
