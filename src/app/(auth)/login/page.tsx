@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/AuthContext";
 
 const Login = () => {
-    const { logIn } = useAuthContext();
+    const { logIn, isLoggedIn } = useAuthContext();
     const router = useRouter();
     const [formData, setFormData] = useState({
         email: "",
@@ -35,6 +35,10 @@ const Login = () => {
             console.error(err);
         }
     }
+
+    if (isLoggedIn)
+        router.push("/dashboard");
+
 
     return (
         <div className="w-full">

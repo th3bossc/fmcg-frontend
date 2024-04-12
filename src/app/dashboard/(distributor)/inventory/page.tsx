@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuthContext } from "@/AuthContext";
-import { getReceipts } from "@/lib/distributor";
+import { getDistributorReceipts } from "@/lib/distributor";
 import { Receipt } from "@/types";
 import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -11,7 +11,7 @@ const InventoryTracker = () => {
     const { jwt } = useAuthContext()
     useEffect(() => {
         const fetchData = async () => {
-            const data = await getReceipts(jwt);
+            const data = await getDistributorReceipts(jwt);
             setReceipts(data ? data : []);
         }
 
