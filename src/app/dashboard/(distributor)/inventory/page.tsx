@@ -1,13 +1,16 @@
 "use client";
 
 import { useAuthContext } from "@/AuthContext";
+import NewProduct from "@/components/NewProduct";
 import { getDistributorReceipts } from "@/lib/distributor";
 import { Receipt } from "@/types";
 import { Button } from "@mui/material";
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 const InventoryTracker = () => {
     const [receipts, setReceipts] = useState<Receipt[]>([]);
+    const [addProduct, setAddProduct] = useState(false);
     const { jwt } = useAuthContext()
     useEffect(() => {
         const fetchData = async () => {
@@ -22,8 +25,24 @@ const InventoryTracker = () => {
         <div className="w-full h-screen flex flex-col gap-4 justify-center items-center p-8">
             <div className="flex justify-between items-center w-full">
                 <h1 className="font-bold text-3xl">Inventory Tracker</h1>
-                <Button variant="outlined"> Add Product </Button>
+                <Button variant="outlined" onClick={() => setAddProduct(true)}> Add Product </Button>
             </div>
+            <AnimatePresence>
+                {
+                    addProduct && (
+                        <motion.div
+                            className="fixed top-0 left-0 w-screen h-screen bg-black/50 flex items-center justify-center"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                        >
+                            <NewProduct
+                                closeHandler={() => setAddProduct(false)}
+                            />
+                        </motion.div>
+                    )
+                }
+            </AnimatePresence>
             <hr className="w-full" />
             <div className="w-full mt-4 h-full">
                 <h1 className="font-semibold mb-4 text-xl text-center"> Order receipts </h1>
