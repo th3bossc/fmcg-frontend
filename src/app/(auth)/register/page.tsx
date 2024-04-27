@@ -4,6 +4,7 @@ import { ChangeEvent, MouseEvent, useState } from "react";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { UserDetails } from "@/types";
 import { useRouter } from "next/navigation";
+import { registerUser } from "@/lib/auth";
 
 const Login = () => {
     const router = useRouter();
@@ -34,8 +35,17 @@ const Login = () => {
         })
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         console.log(formData);
+        await registerUser(
+            formData.email,
+            formData.password,
+            formData.name,
+            "12345678",
+            formData.address || "",
+            formData.role,
+        )
+        router.push("/login");
     }
 
     return (

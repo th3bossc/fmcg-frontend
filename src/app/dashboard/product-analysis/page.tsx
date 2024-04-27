@@ -1,8 +1,7 @@
 "use client"
 
 import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
-// import { recieptData } from "@/dummyData";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import graph from "/public/graph.jpg";
 import graph2 from '/public/graph2.png';
@@ -12,6 +11,10 @@ import { getProducts } from "@/lib/general";
 import { Product, Receipt } from "@/types";
 import { getDistributorReceipts } from "@/lib/distributor";
 import { getRetailerReceipts } from "@/lib/retailer";
+import { Chart, registerables, ChartItem, ChartType, ChartConfiguration } from 'chart.js';
+
+
+Chart.register(...registerables);
 
 const AnalysisPage = () => {
 
@@ -19,10 +22,10 @@ const AnalysisPage = () => {
     const [products, setProducts] = useState<Product[]>([])
     const [recieptData, setRecieptData] = useState<Receipt[]>([]);
 
-    const [analytics, setAnalytics] = useState<{
-        consumption: number,
-        demand: "low" | "medium" | "high",
-    } | null>(null)
+    // const [analytics, setAnalytics] = useState<{
+    //     consumption: number,
+    //     demand: "low" | "medium" | "high",
+    // } | null>(null)
 
     const [formData, setFormData] = useState({
         route: routes[0],
@@ -44,10 +47,10 @@ const AnalysisPage = () => {
     }
 
     const getAnalytics = async () => {
-        setAnalytics({
-            consumption: Math.floor(Math.random() * 100),
-            demand: "low"
-        })
+        // setAnalytics({
+        //     consumption: Math.floor(Math.random() * 100),
+        //     demand: "low"
+        // })
         let recieptData: Receipt[] = [];
         if (user?.role === "DISTRIBUTOR")
             recieptData = await getDistributorReceipts(jwt) || [];
@@ -65,6 +68,50 @@ const AnalysisPage = () => {
         fetchData()
     }, [jwt])
 
+
+
+    const data = useMemo(() => ({
+        labels: recieptData.map(receipt => `Order ${receipt.id}`),
+
+        datasets: [
+            {
+                label: 'Demand',
+                data: recieptData.map(receipt => receipt.product.demand),
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1,
+            },
+        ],
+    }), [recieptData]);
+
+    const config = useMemo((): ChartConfiguration => ({
+        type: 'bar' as ChartType,
+        data: data,
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                },
+                x: {
+                    beginAtZero: true
+                }
+            }
+        }
+    }), [data]);
+
+    useEffect(() => {
+        var ctx = document.getElementById('myChart') as HTMLCanvasElement | null;
+        var graphArea = ctx?.getContext('2d');
+        var myChart: Chart | null = null;
+        if (graphArea) {
+            graphArea.clearRect(0, 0, graphArea.canvas.width, graphArea.canvas.height)
+            myChart = new Chart(graphArea as ChartItem, config);
+        }
+
+        return () => myChart?.destroy()
+    })
 
 
     return (
@@ -115,6 +162,7 @@ const AnalysisPage = () => {
                             {
                                 recieptData.map((item, index) => (
                                     <div key={index} className="flex justify-between items-center w-full p-4 border border-1 border-neutral-600 gap-2">
+                                        <span className="font-regular w-48"> <strong>Order Id: </strong> {item.id}</span>
                                         <span className="font-regular w-48"> <strong>Product:</strong> {item.product.name} </span>
                                         <span className="font-regular w-48"> <strong>Retailer:</strong> {item.retailer.name} </span>
                                         <span className="font-regular w-48"> <strong>Brand:</strong> {item.product.brand}</span>
@@ -125,10 +173,11 @@ const AnalysisPage = () => {
                                     </div>
                                 ))
                             }
-                            <div className="h-full flex gap-2 w-full grid grid-cols-3">
-                                <Image src={graph2} alt="something" className="rounded-lg object-fit-cover w-full h-full" />
+                            <div className="h-full w-full">
+                                {/* <Image src={graph2} alt="something" className="rounded-lg object-fit-cover w-full h-full" />
                                 <Image src={graph} alt="something" className="rounded-lg object-fit-cover w-full h-full" />
-                                <Image src={graph3} alt="something" className="rounded-lg object-fit-cover w-full h-full" />
+                                <Image src={graph3} alt="something" className="rounded-lg object-fit-cover w-full h-full" /> */}
+                                <canvas id="myChart"></canvas>
                             </div>
                         </div>
                     </div>

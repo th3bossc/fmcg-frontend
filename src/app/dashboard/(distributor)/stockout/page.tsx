@@ -5,11 +5,12 @@ import { Order, Product, StockOutData, Route } from "@/types";
 import { Button, ButtonGroup, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Step, StepLabel, Stepper } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 import Card from "@/components/Card";
-import { getProducts, getRoutes } from "@/lib/general";
+import { getProducts } from "@/lib/general";
 import { useAuthContext } from "@/AuthContext";
-import { acceptOrder, getDemands, rejectOrder } from "@/lib/distributor";
+import { acceptOrder, getDemandDetails, getDemands, rejectOrder } from "@/lib/distributor";
 
 const Stockout = () => {
+    const threshold = 1000;
     const { jwt, routes } = useAuthContext();
     const [productData, setProductData] = useState<Product[]>([]);
     const [routeData, setRouteData] = useState<Route[]>(routes);
@@ -22,6 +23,13 @@ const Stockout = () => {
     });
     const [activeStep, setActiveStep] = useState(0);
 
+    const [days, setDays] = useState("");
+    const [details, setDetails] = useState<{
+        totalDemand: number,
+        totalOrders: number
+        totalPrice: number,
+        cost: number,
+    } | null>(null)
     const steps = [
         "Select Route & Product",
         "Choose the orders to accept/reject",
@@ -43,7 +51,9 @@ const Stockout = () => {
     }
 
     const acceptHandler = (index: number) => {
-        acceptOrder(jwt, orderData[index].id);
+        if (!days || isNaN(+days))
+            alert("Please enter a valid number of days");
+        acceptOrder(jwt, orderData[index].id, +days);
     }
 
     const rejectHandler = (index: number) => {
@@ -64,14 +74,15 @@ const Stockout = () => {
     useEffect(() => {
         const fetchData = async () => {
             const orders = await getDemands()
-            console.log(orders);
             setOrderData(
                 orders?.filter(order => order.product.id === formData.product?.id && order.location === formData.route?.location) || []
             )
+            const demandDetails = await getDemandDetails(jwt, formData.route?.id, formData.product?.id);
+            setDetails(demandDetails || null);
         }
         activeStep === 1 && fetchData();
 
-    }, [activeStep, formData.product?.id, formData.route?.location, jwt])
+    }, [activeStep, formData.product?.id, formData.route, jwt])
 
 
     return (
@@ -127,21 +138,53 @@ const Stockout = () => {
                 )}
                 {activeStep === 1 && (
                     <motion.div
-                        className="h-full flex flex-wrap gap-4 mt-4 items-center justify-center w-full"
+                        className="h-full flex flex-col gap-4 mt-4 items-center justify-center w-full"
                     >
-                        {
-                            orderData.map((order, index) => (
-                                <Card
-                                    key={index}
-                                    product={order.product}
-                                    retailer={order.retailer.name}
-                                    required={order.required}
-                                    location={order.location}
-                                    reject={() => rejectHandler(index)}
-                                    accept={() => acceptHandler(index)}
-                                />
-                            ))
-                        }
+                        <div className="w-full h-full flex flex-col items-center justify-center">
+                            <h1>Accepted Orders in the route:</h1>
+
+                            {
+                                !details?.totalOrders ? (
+                                    <h1 className="font-medium text-neutral-600"> No data available for the selected combination... </h1>
+                                ) : (
+                                    <div className="w-full flex gap-2 flex-col">
+                                        <div className="flex justify-between items-center w-full p-4 border border-1 border-neutral-600 gap-2">
+                                            <span className="font-regular w-48"> <strong>Product:</strong> {formData.product?.name || ""} </span>
+                                            <span className="font-regular w-48"> <strong>Deamnd:</strong> {details.totalDemand} </span>
+                                            <span className="font-regular w-48"> <strong>No: of orders:</strong> {details.totalOrders}</span>
+                                            <span className={"font-regular w-48 " + (details.totalPrice - details.cost > threshold ? "text-green-400" : "text-red-400")}> <strong>Profit Margin:</strong> {details.totalPrice - details.cost} </span>
+                                        </div>
+                                    </div>
+                                )
+                            }
+                        </div>
+                        <hr className="w-full" />
+                        <div className="w-full h-full flex flex-col items-center justify-center gap-4">
+                            <h1>Pending Orders in the route:</h1>
+                            <div className="w-full h-full flex items-center justify-center gap-4">
+                                {
+                                    !orderData.length && (
+                                        <h1 className="font-medium text-neutral-600"> No pending orders in this route... </h1>
+                                    )
+                                }
+                                {
+                                    orderData.map((order, index) => (
+                                        <Card
+                                            key={index}
+                                            product={order.product}
+                                            retailer={order.retailer.name}
+                                            required={order.required}
+                                            location={order.location}
+                                            reject={() => rejectHandler(index)}
+                                            accept={() => acceptHandler(index)}
+                                            days={days}
+                                            setDays={setDays}
+                                        />
+                                    ))
+                                }
+                            </div>
+
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>

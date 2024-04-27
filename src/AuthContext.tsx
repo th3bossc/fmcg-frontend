@@ -42,6 +42,7 @@ export const AuthContextProvider = ({
             localStorage.setItem("jwt", token);
             setJwt(token);
             setUser(currentUser);
+            setIsLoggedIn(true);
             setRoutes(routeData || []);
             setNotifications(notificationData || []);
 
@@ -55,8 +56,9 @@ export const AuthContextProvider = ({
             console.log(err);
             localStorage.removeItem('jwt');
             setJwt(null);
+            setIsLoggedIn(false);
             setUser(null);
-            router.push("/login");
+            router.push("/");
         }
         setLoading(false);
     }, [router, pathname]);
@@ -69,7 +71,6 @@ export const AuthContextProvider = ({
     }, []);
 
     const logIn = (jwt: string): void => {
-        setIsLoggedIn(true);
         setAuthenticatedUser(jwt);
     }
 
@@ -77,7 +78,8 @@ export const AuthContextProvider = ({
         localStorage.removeItem('jwt');
         setJwt(null);
         setUser(null);
-        router.push("/login");
+        setIsLoggedIn(false);
+        return router.push("/");
     }
 
 

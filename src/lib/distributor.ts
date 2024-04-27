@@ -30,10 +30,12 @@ export const getDemands = async () => {
 }
 
 
-export const acceptOrder = async (jwt: string | null, orderId: string) => {
+export const acceptOrder = async (jwt: string | null, orderId: string, days: number) => {
     if (!jwt)
         return;
-    await axios.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/distributors/demand/reject/${orderId}/`, undefined, {
+    await axios.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/distributors/demand/reject/${orderId}/`, {
+        days,
+    }, {
         headers: {
             Authorization: `Bearer ${jwt}`
         }
@@ -48,4 +50,22 @@ export const rejectOrder = async (jwt: string | null, orderId: string) => {
             Authorization: `Bearer ${jwt}`
         }
     })
+}
+
+
+export const getDemandDetails = async (jwt: string | null, route?: string, product?: string) => {
+    if (!jwt || !route || !product)
+        return;
+    const response = await axios.post<{
+        totalDemand: number,
+        totalOrders: number
+        totalPrice: number,
+        cost: number,
+    }>(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/distributors/demand/`, { route, product }, {
+        headers: {
+            Authorization: `Bearer ${jwt}`
+        }
+    });
+
+    return response.data;
 }

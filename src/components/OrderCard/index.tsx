@@ -1,7 +1,6 @@
 import { Order } from "@/types";
 
 const OrderCard = ({ product, required, location, status, accepted_by }: Order) => {
-    console.log(product, required, location, status, accepted_by)
     return (
         <div className="h-full w-full border border-1 border-neutral-600 bg-neutral-900 rounded-lg flex flex-col justify-between items-center">
             <div className="w-full flex flex-col items-center justify-center p-4 h-full">
