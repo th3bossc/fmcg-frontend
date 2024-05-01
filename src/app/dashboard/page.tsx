@@ -11,9 +11,34 @@ import { commentData, linkData, teamData } from '@/dummyData';
 import Team from '@/components/Team';
 import dayjs from 'dayjs';
 import { useAuthContext } from '@/AuthContext';
+import { Product, User } from '@/types';
+import { useEffect, useState } from 'react';
+import { getAcceptedOrders } from '@/lib/retailer';
+import OrderStatus from '@/components/OrderStatus';
 
 export default function Home() {
-  const { user, routes, notifications } = useAuthContext();
+  const { user, routes, notifications, jwt } = useAuthContext();
+  const [acceptedOrders, setAcceptedOrders] = useState<{
+    id: string,
+    product: Product,
+    retailer: User,
+    accepted: boolean,
+    expectedDeliveryTime: Date,
+  }[]>([]);
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const orders = await getAcceptedOrders(jwt);
+      setAcceptedOrders(orders || []);
+    }
+
+    fetchData();
+
+  }, [jwt])
+
+
+
   return (
     <main className="grid grid-cols-3 grid-rows-6 p-4 w-full h-screen gap-2">
       <div className="rounded-sm row-start-1 row-span-1 col-start-1 col-span-3 w-full flex items-center justify-between p-4">
@@ -40,14 +65,22 @@ export default function Home() {
       </div>
       <div className="rounded-sm row-start-4 row-span-3 col-start-1 col-span-1 bg-neutral-900 hover:bg-neutral-800 p-4 flex flex-col">
         <div className='w-full flex items-center justify-between'>
-          <h2 className='font-semibold text-lg'>Routes</h2>
-          <button className="hover:underline"> View all </button>
+          <h2 className='font-semibold text-lg'>{user?.role === "DISTRIBUTOR" ? "Routes" : "Accepted orders"}</h2>
+          {/* <button className="hover:underline"> View all </button> */}
         </div>
         <div className='flex flex-col gap-2 mt-2 h-full overflow-y-scroll overflow-x-hidden'>
           {
-            routes.map((route, index) => (
-              <Route key={index} {...route} />
-            ))
+            user?.role === "DISTRIBUTOR"
+              ? routes.map((route, index) => (
+                <Route key={index} {...route} />
+              ))
+              : acceptedOrders.map((order, index) => (
+                <OrderStatus
+                  key={index}
+                  product={order.product}
+                  deliveryDate={order.expectedDeliveryTime.toString().slice(0, 10)}
+                />
+              ))
           }
         </div>
       </div>

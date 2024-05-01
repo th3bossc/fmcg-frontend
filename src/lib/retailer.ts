@@ -1,4 +1,4 @@
-import { Order, Product, Route } from '@/types'
+import { Order, Product, Route, User } from '@/types'
 import axios from 'axios'
 
 
@@ -51,5 +51,23 @@ export const createOrder = async (jwt: string | null, formData: {
             Authorization: `Bearer ${jwt}`
         }
     })
+    return response.data
+}
+
+export const getAcceptedOrders = async (jwt: string | null) => {
+    if (!jwt)
+        return;
+    const response = await axios.get<{
+        id: string,
+        product: Product,
+        retailer: User,
+        accepted: boolean,
+        expectedDeliveryTime: Date,
+    }[]>(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/distributors/accepted/`, {
+        headers: {
+            Authorization: `Bearer ${jwt}`
+        }
+    })
+
     return response.data
 }
