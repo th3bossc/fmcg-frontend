@@ -170,7 +170,7 @@ const AnalysisPage = () => {
                                         <span className="font-regular w-48"> <strong>Cost of Product: </strong> {item.product.price}</span>
                                         <span className="font-regular w-48"> <strong>Delivery Date: </strong> {item.expectedDeliveryTime?.toString().slice(0, 10) || "N/A"} </span>
                                         <span className="font-regular w-48"> <strong>Bill amount: </strong> {item.product.price * (item.product.demand ?? 0)} </span>
-                                        <span className="font-regular w-48"> <strong>Net Profit: </strong> {((item.product.demand ?? 0) * (item.product.price) * 0.07}</span>
+                                        <span className="font-regular w-48"> <strong>Net Profit: </strong> {((item.product.demand ?? 0) * (item.product.price)) * 0.07}</span>
                                         <div>
                                             <p className={`text-white rounded-lg w-32 p-2 text-center capitalize ${item.accepted ? "bg-green-900" : "bg-red-900"}`}> {item.accepted ? "accepted" : "rejected"}</p>
                                         </div>
