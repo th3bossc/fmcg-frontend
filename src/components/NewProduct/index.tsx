@@ -11,7 +11,7 @@ const NewProduct = ({
         name: "",
         category: "",
         brand: "",
-        demand: 0,
+        price: 0,
         priority: 0,
     })
 
@@ -79,13 +79,13 @@ const NewProduct = ({
                     onChange={handleChange}
                 />
                 <div className="mt-5">
-                    <span className="text-neutral-600"> Enter the demand and priority for the product </span>
+                    <span className="text-neutral-600"> Enter the price and priority for the product </span>
                 </div>
                 <input
                     type="number"
-                    name="demand"
-                    value={formData.demand}
-                    placeholder="Product Demand"
+                    name="price"
+                    value={formData.price}
+                    placeholder="Price"
                     className="w-96 h-10 border-2 border-gray-800 rounded-md p-2 mt-4 bg-neutral-900"
                     onChange={handleChange}
                 />

@@ -131,7 +131,7 @@ const Stockout = () => {
                     <motion.div
                         className="h-full flex flex-col gap-4 mt-4 items-center justify-center w-full"
                     >
-                        <div className="w-full h-full flex flex-col items-center justify-center">
+                        {/* <div className="w-full h-full flex flex-col items-center justify-center">
                             <h1>Accepted Orders in the route:</h1>
 
                             {
@@ -149,7 +149,7 @@ const Stockout = () => {
                                 )
                             }
                         </div>
-                        <hr className="w-full" />
+                        <hr className="w-full" /> */}
                         <div className="w-full h-full flex flex-col items-center justify-center gap-4">
                             <h1>Pending Orders in the route:</h1>
                             <div className="w-full h-full flex items-center justify-center gap-4">

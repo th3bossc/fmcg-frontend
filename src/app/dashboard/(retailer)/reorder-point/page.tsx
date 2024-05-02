@@ -11,7 +11,7 @@ import { getProducts } from "@/lib/general";
 import { Product, Receipt } from "@/types";
 import { getDistributorReceipts } from "@/lib/distributor";
 import { getProductDetails, getRetailerReceipts } from "@/lib/retailer";
-import { Chart, registerables, ChartItem, ChartType, ChartConfiguration } from 'chart.js';
+import { Chart, registerables, ChartItem, ChartType, ChartConfiguration, ChartData } from 'chart.js';
 
 
 Chart.register(...registerables);
@@ -73,13 +73,13 @@ const AnalysisPage = () => {
     }, [jwt, formData.product])
 
 
-    const data = useMemo(() => ({
+    const data = useMemo((): ChartData => ({
         labels: recieptData.map(receipt => `Order ${receipt.id}`),
 
         datasets: [
             {
                 label: 'Demand',
-                data: recieptData.map(receipt => receipt.product.demand),
+                data: recieptData.map(receipt => receipt.product.demand ?? 0),
                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
                 borderColor: 'rgba(255, 99, 132, 1)',
                 borderWidth: 1,
@@ -91,7 +91,7 @@ const AnalysisPage = () => {
         type: 'bar' as ChartType,
         data: data,
         options: {
-            indexAxis: 'y',
+            indexAxis: 'x',
             responsive: true,
             scales: {
                 y: {
@@ -169,8 +169,8 @@ const AnalysisPage = () => {
                                         <span className="font-regular w-48"> <strong>Quantity:</strong> {item.product.demand} </span>
                                         <span className="font-regular w-48"> <strong>Cost of Product: </strong> {item.product.price}</span>
                                         <span className="font-regular w-48"> <strong>Delivery Date: </strong> {item.expectedDeliveryTime?.toString().slice(0, 10) || "N/A"} </span>
-                                        <span className="font-regular w-48"> <strong>Bill amount: </strong> {item.product.price * item.product.demand} </span>
-                                        <span className="font-regular w-48"> <strong>Net Profit: </strong> {item.product.demand * (item.product.price - (details?.cost || 0))}</span>
+                                        <span className="font-regular w-48"> <strong>Bill amount: </strong> {item.product.price * (item.product.demand ?? 0)} </span>
+                                        <span className="font-regular w-48"> <strong>Net Profit: </strong> {(item.product.demand ?? 0) * (item.product.price - (details?.cost || 0))}</span>
                                         <div>
                                             <p className={`text-white rounded-lg w-32 p-2 text-center capitalize ${item.accepted ? "bg-green-900" : "bg-red-900"}`}> {item.accepted ? "accepted" : "rejected"}</p>
                                         </div>

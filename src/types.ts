@@ -46,7 +46,7 @@ export type Product = {
     name: string,
     category: string,
     brand: string,
-    demand: number,
+    demand?: number,
     priority: number,
     price: number,
 }

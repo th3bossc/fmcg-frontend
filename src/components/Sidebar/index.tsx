@@ -31,7 +31,7 @@ const Sidebar = () => {
                 },
                 {
                     name: "Live Demand",
-                    href: "/dashboard/stockout",
+                    href: "/dashboard/live-demand",
                     icon: faTowerBroadcast
                 },
                 {

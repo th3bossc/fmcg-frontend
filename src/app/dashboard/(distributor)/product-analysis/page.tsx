@@ -1,24 +1,19 @@
 "use client"
 
-import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import { useEffect, useMemo, useRef, useState } from "react";
-import Image from "next/image";
-import graph from "/public/graph.jpg";
-import graph2 from '/public/graph2.png';
-import graph3 from '/public/graph3.png';
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { useEffect, useMemo, useState } from "react";
 import { useAuthContext } from "@/AuthContext";
 import { getProducts } from "@/lib/general";
 import { Product, Receipt } from "@/types";
 import { getDistributorReceipts } from "@/lib/distributor";
-import { getRetailerReceipts } from "@/lib/retailer";
-import { Chart, registerables, ChartItem, ChartType, ChartConfiguration } from 'chart.js';
+import { Chart, registerables, ChartItem, ChartType, ChartConfiguration, ChartData } from 'chart.js';
 
 
 Chart.register(...registerables);
 
 const AnalysisPage = () => {
 
-    const { jwt, routes, user } = useAuthContext();
+    const { jwt, routes } = useAuthContext();
     const [products, setProducts] = useState<Product[]>([])
     const [recieptData, setRecieptData] = useState<Receipt[]>([]);
 
@@ -69,13 +64,13 @@ const AnalysisPage = () => {
 
 
 
-    const data = useMemo(() => ({
+    const data = useMemo((): ChartData => ({
         labels: recieptData.map(receipt => `Order ${receipt.id}`),
 
         datasets: [
             {
                 label: 'Demand',
-                data: recieptData.map(receipt => receipt.product.demand),
+                data: recieptData.map(receipt => receipt.product.demand ?? 0),
                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
                 borderColor: 'rgba(255, 99, 132, 1)',
                 borderWidth: 1,
@@ -87,7 +82,7 @@ const AnalysisPage = () => {
         type: 'bar' as ChartType,
         data: data,
         options: {
-            indexAxis: 'y',
+            indexAxis: 'x',
             responsive: true,
             scales: {
                 y: {
@@ -179,7 +174,7 @@ const AnalysisPage = () => {
                     </div>
                 ) : (
                     <span className="w-full h-full flex justify-center items-center text-neutral-600 text-xl">
-                        Choose a product and a route to view the analytics
+                        No data available for the chosen product
                     </span>
                 )
             }
