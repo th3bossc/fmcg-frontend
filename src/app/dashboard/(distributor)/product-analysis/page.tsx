@@ -46,23 +46,22 @@ const AnalysisPage = () => {
         });
     }
 
-    const getAnalytics = async () => {
-        // setAnalytics({
-        //     consumption: Math.floor(Math.random() * 100),
-        //     demand: "low"
-        // })
-        let recieptData: Receipt[] = [];
-        if (user?.role === "DISTRIBUTOR")
-            recieptData = await getDistributorReceipts(jwt) || [];
-        else if (user?.role === "RETAILER")
-            recieptData = await getRetailerReceipts(jwt);
-        setRecieptData(recieptData?.filter(reciept => reciept.product.id === formData.product.id) || []);
-    }
+    useEffect(() => {
+        const getAnalytics = async () => {
+            const recieptData = await getDistributorReceipts(jwt) || [];
+            setRecieptData(recieptData?.filter(reciept => reciept.product.id === formData.product?.id && reciept.route.id === formData.route?.id) || []);
+        }
+        getAnalytics();
+    }, [jwt, formData.route, formData.product])
 
     useEffect(() => {
         const fetchData = async () => {
             const productsData = await getProducts()
             setProducts(productsData)
+            setFormData(prev => ({
+                ...prev,
+                product: productsData[0],
+            }));
         }
 
         fetchData()
@@ -149,9 +148,6 @@ const AnalysisPage = () => {
                         }
                     </Select>
                 </FormControl>
-            </div>
-            <div className="mt-4">
-                <Button size="small" variant="outlined" className="font-semibold" onClick={getAnalytics}> View Data </Button>
             </div>
             {
                 recieptData.length ? (

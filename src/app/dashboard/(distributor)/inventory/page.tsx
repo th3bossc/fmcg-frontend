@@ -44,7 +44,7 @@ const InventoryTracker = () => {
                 }
             </AnimatePresence>
             <hr className="w-full" />
-            <div className="w-full mt-4 h-full">
+            <div className="w-full mt-4 h-full overflow-scroll">
                 <h1 className="font-semibold mb-4 text-xl text-center"> Order receipts </h1>
                 <div className="h-full w-full flex gap-2 flex-col">
                     {

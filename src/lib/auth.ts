@@ -31,7 +31,7 @@ export const registerUser = async (
     password: string,
     name: string,
     contact: string,
-    address: string,
+    address: string | null,
     role: Role
 ) => {
     if (role === "RETAILER") {

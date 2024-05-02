@@ -48,6 +48,7 @@ export type Product = {
     brand: string,
     demand: number,
     priority: number,
+    price: number,
 }
 
 
@@ -75,6 +76,8 @@ export type Receipt = {
     product: Product,
     retailer: User,
     accepted: boolean,
+    expectedDeliveryTime?: Date,
+    route: Route,
 }
 
 export type Demand = {

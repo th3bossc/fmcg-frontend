@@ -7,7 +7,7 @@ import Notification from '@/components/Notification';
 import Route from '@/components/Route';
 import Comment from '@/components/Comment';
 import Link from '@/components/Link';
-import { commentData, linkData, teamData } from '@/dummyData';
+import { distributorCommentData, retailerCommentData, linkData, teamData } from '@/dummyData';
 import Team from '@/components/Team';
 import dayjs from 'dayjs';
 import { useAuthContext } from '@/AuthContext';
@@ -33,9 +33,9 @@ export default function Home() {
       setAcceptedOrders(orders || []);
     }
 
-    fetchData();
+    user?.role === 'RETAILER' && fetchData();
 
-  }, [jwt])
+  }, [user?.role, jwt])
 
 
 
@@ -88,9 +88,13 @@ export default function Home() {
         <h2 className='font-semibold text-lg'>Comments</h2>
         <div className='flex flex-col gap-2 p-2 mt-2 h-full overflow-y-scroll overflow-x-hidden'>
           {
-            commentData.map((comment, index) => (
-              <Comment key={index} {...comment} />
-            ))
+            user?.role === 'DISTRIBUTOR'
+              ? distributorCommentData.map((comment, index) => (
+                <Comment key={index} {...comment} />
+              ))
+              : retailerCommentData.map((comment, index) => (
+                <Comment key={index} {...comment} />
+              ))
           }
         </div>
       </div>

@@ -33,7 +33,7 @@ export const getDemands = async () => {
 export const acceptOrder = async (jwt: string | null, orderId: string, days: number) => {
     if (!jwt)
         return;
-    await axios.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/distributors/demand/reject/${orderId}/`, {
+    await axios.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/distributors/demand/accept/${orderId}/`, {
         days,
     }, {
         headers: {

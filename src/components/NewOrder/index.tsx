@@ -12,7 +12,7 @@ const NewOrder = ({
     closeHandler: () => void,
     setOrderHistory: Dispatch<SetStateAction<Order[]>>,
 }) => {
-    const { jwt, routes } = useAuthContext();
+    const { jwt } = useAuthContext();
     const [products, setProducts] = useState<Product[]>([]);
 
     useEffect(() => {
@@ -29,11 +29,9 @@ const NewOrder = ({
 
 
     const [formData, setFormData] = useState<{
-        route: Route,
         product: Product,
         required: string,
     }>({
-        route: routes[0],
         product: products[0],
         required: "",
     })
@@ -51,7 +49,6 @@ const NewOrder = ({
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            console.log(formData);
             const updatedData = await createOrder(jwt, formData);
             setOrderHistory(updatedData);
             closeHandler();
@@ -61,12 +58,12 @@ const NewOrder = ({
         }
     }
 
-    const handleRouteChange = (e: SelectChangeEvent) => {
-        setFormData({
-            ...formData,
-            route: routes[+(e.target.value)]
-        });
-    }
+    // const handleRouteChange = (e: SelectChangeEvent) => {
+    //     setFormData({
+    //         ...formData,
+    //         route: routes[+(e.target.value)]
+    //     });
+    // }
 
     const handleProductChange = (e: SelectChangeEvent) => {
         setFormData({
@@ -90,7 +87,7 @@ const NewOrder = ({
             </svg>
             <form className="w-full h-full p-4 flex flex-col items-center justify-center" onSubmit={handleSubmit}>
                 <h1 className="w-full p-2 text-center text-xl"> Add a new Product to your inventory </h1>
-                <FormControl className="w-96 mt-4 text-white">
+                {/* <FormControl className="w-96 mt-4 text-white">
                     <InputLabel id="route-select-label">Route</InputLabel>
                     <Select
                         labelId="route-select-label"
@@ -104,7 +101,7 @@ const NewOrder = ({
                             ))
                         }
                     </Select>
-                </FormControl>
+                </FormControl> */}
                 <FormControl className="w-96 mt-4 text-white">
                     <InputLabel id="product-select-label">Product</InputLabel>
                     <Select

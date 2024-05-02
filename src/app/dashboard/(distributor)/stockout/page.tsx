@@ -7,7 +7,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Card from "@/components/Card";
 import { getProducts } from "@/lib/general";
 import { useAuthContext } from "@/AuthContext";
-import { acceptOrder, getDemandDetails, getDemands, rejectOrder } from "@/lib/distributor";
+import { getDemandDetails, getDemands } from "@/lib/distributor";
 
 const Stockout = () => {
     const threshold = 1000;
@@ -23,7 +23,6 @@ const Stockout = () => {
     });
     const [activeStep, setActiveStep] = useState(0);
 
-    const [days, setDays] = useState("");
     const [details, setDetails] = useState<{
         totalDemand: number,
         totalOrders: number
@@ -50,15 +49,7 @@ const Stockout = () => {
         });
     }
 
-    const acceptHandler = (index: number) => {
-        if (!days || isNaN(+days))
-            alert("Please enter a valid number of days");
-        acceptOrder(jwt, orderData[index].id, +days);
-    }
 
-    const rejectHandler = (index: number) => {
-        rejectOrder(jwt, orderData[index].id);
-    }
 
 
     useEffect(() => {
@@ -171,14 +162,11 @@ const Stockout = () => {
                                     orderData.map((order, index) => (
                                         <Card
                                             key={index}
+                                            id={order.id}
                                             product={order.product}
                                             retailer={order.retailer.name}
                                             required={order.required}
                                             location={order.location}
-                                            reject={() => rejectHandler(index)}
-                                            accept={() => acceptHandler(index)}
-                                            days={days}
-                                            setDays={setDays}
                                         />
                                     ))
                                 }

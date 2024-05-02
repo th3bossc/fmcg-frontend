@@ -59,8 +59,8 @@ const Sidebar = () => {
                     icon: faUsers
                 },
                 {
-                    name: "Product Analysis",
-                    href: "/dashboard/product-analysis",
+                    name: "Reorder Point",
+                    href: "/dashboard/reorder-point",
                     icon: faMagnifyingGlass
                 },
             ]

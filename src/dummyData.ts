@@ -8,7 +8,7 @@ export const routeData: Route[] = [
 ]
 
 
-export const commentData: Comment[] = [
+export const distributorCommentData: Comment[] = [
     {
         header: "Current Routes",
         text: "Stockouts",
@@ -17,6 +17,18 @@ export const commentData: Comment[] = [
     {
         header: "Special Requests",
         text: "Find My Customer"
+    }
+]
+
+export const retailerCommentData: Comment[] = [
+    {
+        header: "Order Details",
+        text: "Reorder Point",
+        link: "/dashboard/reorder-point",
+    },
+    {
+        header: "Special Requests",
+        text: "Find My Customer",
     }
 ]
 

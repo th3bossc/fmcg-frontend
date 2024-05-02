@@ -36,14 +36,12 @@ export const getRetailerReceipts = async (jwt: string | null) => {
 }
 
 export const createOrder = async (jwt: string | null, formData: {
-    route: Route,
     product: Product,
     required: string
 }) => {
     if (!jwt || isNaN(formData.required as any))
         return;
     const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/retailers/orders/`, {
-        route: formData.route.id,
         product: formData.product.id,
         required: +formData.required
     }, {
@@ -70,4 +68,22 @@ export const getAcceptedOrders = async (jwt: string | null) => {
     })
 
     return response.data
+}
+
+export const getProductDetails = async (jwt: string | null, product: string) => {
+    if (!jwt)
+        return;
+
+    const response = await axios.post<{
+        totalDemand: number,
+        totalOrders: number,
+        totalPrice: number,
+        cost: number
+    }>(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/retailers/receipts/`, { product }, {
+        headers: {
+            Authorization: `Bearer ${jwt}`
+        }
+    })
+
+    return response.data;
 }
