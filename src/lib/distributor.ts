@@ -40,6 +40,8 @@ export const acceptOrder = async (jwt: string | null, orderId: string, days: num
             Authorization: `Bearer ${jwt}`
         }
     })
+
+    alert("[INFO] Accepted Successfully")
 }
 
 export const rejectOrder = async (jwt: string | null, orderId: string) => {
@@ -50,6 +52,7 @@ export const rejectOrder = async (jwt: string | null, orderId: string) => {
             Authorization: `Bearer ${jwt}`
         }
     })
+    alert("[INFO] Rejected Successfully")
 }
 
 

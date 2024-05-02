@@ -11,7 +11,7 @@ export const routeData: Route[] = [
 export const distributorCommentData: Comment[] = [
     {
         header: "Current Routes",
-        text: "Reorder Point",
+        text: "Live Demand",
         link: "/dashboard/live-demand"
     },
     {
